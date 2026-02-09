@@ -26,11 +26,11 @@ class Atrativo {
       id: json['id'],
       placeId: json['place_id'],
       nome: json['nome'],
-      latitude: (json['latitude'] as num).toDouble(),
-      longitude: (json['longitude'] as num).toDouble(),
+      latitude: double.parse(json['latitude'].toString()),
+      longitude: double.parse(json['longitude'].toString()),
       endereco: json['endereco'],
       enderecoCompleto: json['endereco_completo'],
-      rating: json['rating'] != null ? (json['rating'] as num).toDouble() : null,
+      rating: json['rating'] != null ? double.tryParse(json['rating'].toString()) : null,
       userRatingsTotal: json['user_ratings_total'],
     );
   }
