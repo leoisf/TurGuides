@@ -40,3 +40,16 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# API Keys e Secrets - NUNCA COMMITAR!
+.env
+.env.local
+.env.*.local
+android/local.properties
+google-services.json
+GoogleService-Info.plist
+
+# Documentação com informações sensíveis
+*_API_KEY*.md
+*_SECRETS*.md
+CORRIGIR_API_KEY_EXPOSTA.md

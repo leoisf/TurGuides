@@ -17,6 +17,11 @@ class AppConfig {
   static const String tokenKey = 'auth_token';
   static const String userKey = 'user_data';
   
-  // Google Maps API Key (mesma chave do sistema web)
-  static const String googleMapsApiKey = 'AIzaSyAnTSpYvHhtyIR_IzAY68aGWfqxan6Sz20';
+  // Google Maps API Key
+  // IMPORTANTE: Nunca commite a chave real!
+  // Configure no android/local.properties: google.maps.api.key=SUA_CHAVE
+  static const String googleMapsApiKey = String.fromEnvironment(
+    'GOOGLE_MAPS_API_KEY',
+    defaultValue: 'YOUR_API_KEY_HERE', // Placeholder - configure no local.properties
+  );
 }
