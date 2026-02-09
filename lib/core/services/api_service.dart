@@ -73,7 +73,8 @@ class ApiService {
     if (response.statusCode >= 200 && response.statusCode < 300) {
       return jsonDecode(response.body);
     } else {
-      throw Exception('Erro na requisição: ${response.statusCode}');
+      final errorBody = response.body.isNotEmpty ? response.body : 'Sem detalhes';
+      throw Exception('Erro ${response.statusCode}: $errorBody');
     }
   }
 }

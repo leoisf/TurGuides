@@ -19,17 +19,8 @@ class AtrativoDetalhesPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header com imagem placeholder
-            Container(
-              height: 200,
-              width: double.infinity,
-              color: Theme.of(context).colorScheme.primaryContainer,
-              child: Icon(
-                Icons.place,
-                size: 80,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
+            // Header com fotos
+            _buildPhotosSection(context),
             
             Padding(
               padding: const EdgeInsets.all(16),
@@ -145,6 +136,168 @@ class AtrativoDetalhesPage extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPhotosSection(BuildContext context) {
+    // Debug
+    print('📸 _buildPhotosSection chamado');
+    print('   Fotos: ${atrativo.fotos}');
+    print('   Total: ${atrativo.fotos?.length ?? 0}');
+    
+    if (atrativo.fotos == null || atrativo.fotos!.isEmpty) {
+      // Placeholder quando não há fotos
+      return Container(
+        height: 200,
+        width: double.infinity,
+        color: Theme.of(context).colorScheme.primaryContainer,
+        child: Icon(
+          Icons.place,
+          size: 80,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+      );
+    }
+
+    // Se há apenas uma foto, mostra em tela cheia
+    if (atrativo.fotos!.length == 1) {
+      return SizedBox(
+        height: 250,
+        width: double.infinity,
+        child: Image.network(
+          atrativo.fotos![0],
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return Container(
+              color: Theme.of(context).colorScheme.primaryContainer,
+              child: Icon(
+                Icons.broken_image,
+                size: 80,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            );
+          },
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return Container(
+              color: Theme.of(context).colorScheme.primaryContainer,
+              child: Center(
+                child: CircularProgressIndicator(
+                  value: loadingProgress.expectedTotalBytes != null
+                      ? loadingProgress.cumulativeBytesLoaded /
+                          loadingProgress.expectedTotalBytes!
+                      : null,
+                ),
+              ),
+            );
+          },
+        ),
+      );
+    }
+
+    // Se há múltiplas fotos, mostra em carrossel
+    return Column(
+      children: [
+        SizedBox(
+          height: 250,
+          child: PageView.builder(
+            itemCount: atrativo.fotos!.length,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () => _showPhotoGallery(context, index),
+                child: Image.network(
+                  atrativo.fotos![index],
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                      child: Icon(
+                        Icons.broken_image,
+                        size: 80,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    );
+                  },
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Container(
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes!
+                              : null,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              );
+            },
+          ),
+        ),
+        // Indicador de páginas
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+              atrativo.fotos!.length,
+              (index) => Container(
+                margin: const EdgeInsets.symmetric(horizontal: 4),
+                width: 8,
+                height: 8,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _showPhotoGallery(BuildContext context, int initialIndex) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => Scaffold(
+          backgroundColor: Colors.black,
+          appBar: AppBar(
+            backgroundColor: Colors.black,
+            iconTheme: const IconThemeData(color: Colors.white),
+            title: Text(
+              '${initialIndex + 1} de ${atrativo.fotos!.length}',
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+          body: PageView.builder(
+            controller: PageController(initialPage: initialIndex),
+            itemCount: atrativo.fotos!.length,
+            itemBuilder: (context, index) {
+              return InteractiveViewer(
+                child: Center(
+                  child: Image.network(
+                    atrativo.fotos![index],
+                    fit: BoxFit.contain,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Center(
+                        child: Icon(
+                          Icons.broken_image,
+                          size: 80,
+                          color: Colors.white,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

@@ -1,7 +1,7 @@
 class AppConfig {
-  // Use 10.0.2.2 for Android Emulator (maps to host's localhost)
-  // For physical device, replace with your computer's IP (e.g., 192.168.1.100)
-  static const String baseUrl = 'http://10.0.2.2:3001/api';
+  // Using localhost with adb reverse
+  // Run: adb reverse tcp:3001 tcp:3001
+  static const String baseUrl = 'http://localhost:3001/api';
   static const String healthEndpoint = '/health';
   
   // Endpoints
@@ -16,4 +16,7 @@ class AppConfig {
   // Storage Keys
   static const String tokenKey = 'auth_token';
   static const String userKey = 'user_data';
+  
+  // Google Maps API Key (mesma chave do sistema web)
+  static const String googleMapsApiKey = 'AIzaSyAnTSpYvHhtyIR_IzAY68aGWfqxan6Sz20';
 }

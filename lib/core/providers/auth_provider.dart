@@ -25,6 +25,9 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
 
     try {
+      debugPrint('🔐 Tentando login com: $emailOrDocument');
+      debugPrint('📡 URL: ${AppConfig.baseUrl}${AppConfig.auth}/login');
+      
       final response = await _api.post(
         '${AppConfig.auth}/login',
         {
@@ -33,20 +36,27 @@ class AuthProvider with ChangeNotifier {
         },
       );
 
+      debugPrint('✅ Resposta recebida: ${response.keys}');
+
       // A API retorna { token, usuario } diretamente, não dentro de 'data'
       if (response['token'] != null) {
         final token = response['token'];
         final userData = response['usuario'];
         
+        debugPrint('💾 Salvando token e usuário');
         await _storage.saveToken(token);
         _currentUser = Usuario.fromJson(userData);
         await _storage.saveUser(_currentUser!);
         
+        debugPrint('✅ Login bem-sucedido: ${_currentUser!.nome}');
         _isLoading = false;
         notifyListeners();
         return true;
+      } else {
+        debugPrint('❌ Token não encontrado na resposta');
       }
     } catch (e) {
+      debugPrint('❌ Erro no login: $e');
       _isLoading = false;
       notifyListeners();
       rethrow;

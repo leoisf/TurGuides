@@ -1,0 +1,43 @@
+# SHA-1 Key para Google Maps API
+
+## Informações do Certificado Debug
+
+**SHA-1:** 9A:07:93:BF:CA:55:F1:A9:87:4E:C2:65:86:D9:84:FC:AE:E6:8C:BC
+
+**SHA-256:** 42:57:2A:1A:AE:B0:06:EB:77:31:5E:3A:CD:8F:9F:9B:C2:EE:CE:52:9D:D3:A3:60:F6:17:06:0D:AD:D8:0E:2F
+
+**Nome do Pacote:** com.example.tour_guides
+
+## Como Usar
+
+### 1. Acessar Google Cloud Console
+https://console.cloud.google.com/
+
+### 2. Ir em Credenciais
+APIs e Serviços > Credenciais > Sua API Key
+
+### 3. Adicionar Restrição
+- Tipo: Apps Android
+- Nome do pacote: `com.example.tour_guides`
+- Impressão digital SHA-1: `9A:07:93:BF:CA:55:F1:A9:87:4E:C2:65:86:D9:84:FC:AE:E6:8C:BC`
+
+### 4. Salvar
+Aguarde alguns minutos para propagar as alterações.
+
+## Comandos Úteis
+
+### Obter SHA-1 (Windows)
+```bash
+keytool -list -v -keystore "%USERPROFILE%\.android\debug.keystore" -alias androiddebugkey -storepass android -keypass android
+```
+
+### Obter SHA-1 (Linux/Mac)
+```bash
+keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android
+```
+
+## Notas
+
+- Esta é a chave de **DEBUG** (desenvolvimento)
+- Para produção, você precisará gerar uma chave de release
+- Não compartilhe a chave de release publicamente

@@ -6,6 +6,12 @@
 - [ ] Backend rodando em `http://localhost:3001`
 - [ ] Testar: `curl http://localhost:3001/api/health`
 
+### 1.5. Google Maps API (Novo!)
+- [ ] Obter API Key do Google Maps
+- [ ] Configurar em `android/app/src/main/AndroidManifest.xml`
+- [ ] **Guia Rápido:** `QUICK_MAPS_SETUP.md` (5 minutos)
+- [ ] **Guia Completo:** `GOOGLE_MAPS_SETUP.md`
+
 ### 2. Flutter
 - [ ] Flutter SDK instalado
 - [ ] Executar: `flutter doctor`
@@ -16,14 +22,14 @@
 #### Android Emulator
 ```dart
 // lib/core/config/app_config.dart
-static const String baseUrl = 'http://10.0.2.2:3001/api';
+static const String baseUrl = 'http://10.0.2.2:3002/api';
 ```
 
 #### Dispositivo Físico
 1. Descobrir IP do computador: `ipconfig` (Windows)
 2. Atualizar baseUrl:
 ```dart
-static const String baseUrl = 'http://SEU_IP:3001/api';
+static const String baseUrl = 'http://SEU_IP:3002/api';
 ```
 3. Garantir que dispositivo e PC estão na mesma rede WiFi
 

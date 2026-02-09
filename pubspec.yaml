@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   
   # State Management
   provider: ^6.1.1
@@ -28,6 +30,11 @@ dependencies:
   # Utils
   intl: ^0.20.2
   logger: ^2.0.2+1
+  
+  # Maps
+  google_maps_flutter: ^2.5.0
+  geolocator: ^10.1.0
+  geocoding: ^2.1.1
 
 dev_dependencies:
   flutter_test:
@@ -36,3 +43,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  
+  assets:
+    - assets/images/
